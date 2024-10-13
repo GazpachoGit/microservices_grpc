@@ -6,6 +6,7 @@ require github.com/GazpachoGit/microservices_proto/golang/order v0.0.0-202410101
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
+	github.com/GazpachoGit/microservices_proto/golang/payment v0.0.0-20241010151824-195b6f3745d8
 	github.com/go-sql-driver/mysql v1.8.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
