@@ -31,14 +31,19 @@ func (a Application) PlaceOrder(order domain.Order) (domain.Order, error) {
 	if paymentErr != nil {
 		st := status.Convert(paymentErr)
 		var allErrors []string
-		for _, detail := range st.Details() {
-			switch t := detail.(type) {
-			case *errdetails.BadRequest:
-				for _, violation := range t.GetFieldViolations() {
-					allErrors = append(allErrors, violation.Description)
+		if len(st.Details()) > 0 {
+			for _, detail := range st.Details() {
+				switch t := detail.(type) {
+				case *errdetails.BadRequest:
+					for _, violation := range t.GetFieldViolations() {
+						allErrors = append(allErrors, violation.Description)
+					}
 				}
 			}
+		} else {
+			allErrors = append(allErrors, paymentErr.Error())
 		}
+
 		fieldErr := &errdetails.BadRequest_FieldViolation{
 			Field:       "payment",
 			Description: strings.Join(allErrors, "\n"),
